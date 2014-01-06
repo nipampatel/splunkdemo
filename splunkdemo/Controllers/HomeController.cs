@@ -12,8 +12,7 @@ namespace splunkdemo.Controllers
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public HomeController()
-        {
-            _logger.Log(LogLevel.Info, string.Format("Url : {0}", System.Web.HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath));
+        {            
         }        
 
         public ActionResult Index()
@@ -25,19 +24,19 @@ namespace splunkdemo.Controllers
         public ActionResult Login(string errorCode)
         {
             // errorCode refers to user name for this demo
-            _logger.Log(LogLevel.Info, "Login page is called from ip 127.0.0.1 for user {0}", errorCode);
+            _logger.Log(LogLevel.Info, string.Format("User={0}, IP=127.0.0.1", errorCode));
             return new JsonResult() { Data = "Login Successful", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult ThrowHttpException(string errorCode)
         {
-            _logger.LogException(LogLevel.Error, string.Format("Http status code {0}", errorCode), new HttpException(Int32.Parse(errorCode), "Some sort of description for exception goes here"));
+            _logger.LogException(LogLevel.Error, string.Format("StatusCode={0}", errorCode), new HttpException(Int32.Parse(errorCode), "Some sort of description for exception goes here"));
             return View(Int32.Parse(errorCode));
         }
 
-        public ActionResult LogKVP(string value)
+        public ActionResult LogKVP(string errorCode)
         {
-            _logger.Log(LogLevel.Info, string.Format("Name={0}, ReferrerUrl={1}", value, System.Web.HttpContext.Current.Request.UrlReferrer));
+            _logger.Log(LogLevel.Info, string.Format("Name={0}, ReferrerUrl={1}", errorCode, System.Web.HttpContext.Current.Request.UrlReferrer));
             return new JsonResult() { Data = "Kvp Logged to info level.", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
