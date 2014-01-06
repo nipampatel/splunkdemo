@@ -29,10 +29,16 @@ namespace splunkdemo.Controllers
             return new JsonResult() { Data = "Login Successful", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        public ActionResult ThrowHttpException(int errorCode)
+        public ActionResult ThrowHttpException(string errorCode)
         {
-            _logger.LogException(LogLevel.Error, string.Format("Http status code {0}", errorCode), new HttpException(errorCode, "Some sort of description for exception goes here"));
-            return View(errorCode);
+            _logger.LogException(LogLevel.Error, string.Format("Http status code {0}", errorCode), new HttpException(Int32.Parse(errorCode), "Some sort of description for exception goes here"));
+            return View(Int32.Parse(errorCode));
+        }
+
+        public ActionResult LogKVP(string value)
+        {
+            _logger.Log(LogLevel.Info, string.Format("Name={0}, ReferrerUrl={1}", value, System.Web.HttpContext.Current.Request.UrlReferrer));
+            return new JsonResult() { Data = "Kvp Logged to info level.", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }
