@@ -3,6 +3,39 @@
 }
 
 <h2>Index</h2>
-<h3>
-    This is index page and I am doing some splunk demo in front of few smartest brain in industry.
+<h3>This is index page and I am doing some splunk demo in front of few smartest brain
+    in industry.
 </h3>
+<ul>
+    <li>
+        @Html.ActionLink("Index", "Index", "Home", null, null)
+
+    </li>
+    <li>
+        @Html.ActionLink("Login(admin)", "Login", "Home", new { errorCode = "admin" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("Login(qa)", "Login", "Home", new { errorCode = "qa" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("Login(test)", "Login", "Home", new { errorCode = "test" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("ThrowHttpException403", "ThrowHttpException", "Home", new { errorCode = "403" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("ThrowHttpException404", "ThrowHttpException", "Home", new { errorCode = "404" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("ThrowHttpException500", "ThrowHttpException", "Home", new { errorCode = "500" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("LogKVP(myvalue)", "LogKVP", "Home", new { errorCode = "myvalue" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("LogKVP(yourvalue)", "LogKVP", "Home", new { errorCode = "yourvalue" }, null)
+    </li>
+    <li>
+        @Html.ActionLink("LogKVP(ourvalue)", "LogKVP", "Home", new { errorCode = "ourvalue" }, null)
+    </li>
+</ul>
