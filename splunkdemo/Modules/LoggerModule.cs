@@ -24,20 +24,30 @@ namespace splunkdemo.Modules
         public void OnStartRequest(object sender, EventArgs e)
         {
             HttpContext.Current.Items["uniqueid"] = Guid.NewGuid().ToString("N");
+            HttpContext.Current.Items["startTime"] = DateTime.Now;
         }
 
         public void OnEndRequest(object sender, EventArgs e)
         {
+            DateTime startTime = DateTime.MinValue;
+
+            if (HttpContext.Current.Items["startTime"] != null)
+            {
+                startTime = DateTime.Parse(HttpContext.Current.Items["startTime"].ToString());
+            }
+
             HttpApplication context = (HttpApplication)sender;
             RouteData routeData = context.Request.RequestContext.RouteData;
 
-            _logger.Log(LogLevel.Info, string.Format("Id={0},IpAddress={1},RequestUrl={2},Status={3},Referrer={4},BrowserType={5}", 
+            _logger.Log(LogLevel.Info, string.Format("Id={0},IpAddress={1},RequestUrl={2},Status={3},Referrer={4},BrowserType={5},ExecutionTime={6}", 
                 HttpContext.Current.Items["uniqueid"],
                 context.Request.ServerVariables["REMOTE_ADDR"],
                 context.Request.Url,
                 context.Response.Status,
                 (context.Request.UrlReferrer == null ? string.Empty : context.Request.UrlReferrer.ToString()),
-                context.Request.UserAgent));
+                context.Request.UserAgent,
+                (DateTime.Now - startTime).TotalMilliseconds
+                ));
         }
     }
 }
