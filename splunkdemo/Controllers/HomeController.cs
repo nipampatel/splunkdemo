@@ -19,19 +19,26 @@ namespace splunkdemo.Controllers
         public ActionResult Login(string errorCode)
         {   
             _logger.Log(LogLevel.Info, string.Format("Id={0}, User={1}", HttpContext.Items["uniqueid"], errorCode));
+            AuthenticateUser(errorCode, "DummyPassword");
             return new JsonResult() { Data = "Login Successful", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public ActionResult ThrowHttpException(string errorCode)
         {
             _logger.LogException(LogLevel.Error, string.Format("Id={0}, StatusCode={1}", HttpContext.Items["uniqueid"], errorCode), new HttpException(Int32.Parse(errorCode), "Some sort of description for exception goes here"));
-            return View(Int32.Parse(errorCode));
+            throw new HttpException(Int32.Parse(errorCode), "Dummy exception being thrown.");            
         }
 
         public ActionResult LogKVP(string errorCode)
         {
             _logger.Log(LogLevel.Info, string.Format("Id={0}, Name={1}", HttpContext.Items["uniqueid"], errorCode));
             return new JsonResult() { Data = "Kvp Logged to info level.", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        private bool AuthenticateUser(string userName, string password)
+        {            
+            _logger.Log(LogLevel.Info, string.Format("Id={0}, Method={1}, User={1}", HttpContext.Items["uniqueid"], "AuthenticateUser", userName));
+            return true;
         }
     }
 }
