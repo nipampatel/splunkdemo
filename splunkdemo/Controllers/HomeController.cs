@@ -37,7 +37,7 @@ namespace splunkdemo.Controllers
 
         private bool AuthenticateUser(string userName, string password)
         {            
-            _logger.Log(LogLevel.Info, string.Format("Id={0}, Method={1}, User={1}", HttpContext.Items["uniqueid"], "AuthenticateUser", userName));
+            _logger.Log(LogLevel.Info, string.Format("Id={0}, Method={1}, User={2}", HttpContext.Items["uniqueid"], "AuthenticateUser", userName));
             return true;
         }
     }
